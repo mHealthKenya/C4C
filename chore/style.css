@@ -1,0 +1,193 @@
+h3 {
+	
+	
+}
+h1{
+  color:#ffffff;
+  font-size:21pt;
+
+}
+
+table.wrap{
+	width:80%;
+	background-color:#A91E22;
+    text-align:center;
+	margin:0px;
+}
+td.left_column{
+	width:30%;
+	background-color:#DADBB6;
+	
+}
+td.right_column{
+	width:20%;
+}
+td.main_column{
+	
+	background-color:#A91E22;
+	
+}
+
+
+table.page{
+text-align:center;
+margin:0px;
+
+}
+h2 {
+  color:#fff;
+  font-size:14pt;
+  font-family:tahoma;
+
+}
+TABLE.body{
+		width:100%;
+		border:0px solid #ffffff;
+		background-color:#A91E22;
+		font-family:Tahoma,Arial;
+		font-size:10pt;
+		font-weight:none;
+		color:#7F1921;
+		text-align:left;
+		}
+TABLE.body a{
+	color:#7F1921;
+}
+TABLE.form{
+		border:1px solid #ffffff;
+		background-color:#7F1921;
+		font-family:Verdana,Tahoma,Arial;
+		font-size:8pt;
+		font-weight:none;
+		color:#FDE9EC;
+		text-align:left;
+		}
+
+TABLE.top{
+        
+		font-family:Verdana,Tahoma,Arial;
+		font-size:8pt;
+		font-weight:none;
+		color:#000000
+		}
+
+TABLE.top a{
+		color:#000000
+		}
+TABLE.filter {
+font-family:Verdana,Tahoma,Arial;
+font-size:8pt;
+  
+}
+
+#loggerdiv {
+
+color:#FDE9EC;
+font-family:Verdana,Tahoma,Arial;
+font-size:8pt;
+background-color:#428BCA;
+}
+b {
+margin:0px;
+}	
+#smoothmenu1{
+	width:80%;
+	margin-right:0px;
+	padding-right:0px;
+}	
+
+tr.th_title{
+	background-color:#7F1921;
+	color:#ffffff;
+}
+#text_style{
+	color:#FDE9EC;
+}
+.pop_text{
+	color:#FDE9EC;
+	font-family:Tahoma,Arial;
+	font-size:10pt;
+	font-weight:none;
+	
+}
+
+h2 a {
+	
+	color:#fff;
+}
+.profile {
+	
+}
+.profile_personal_readonly {
+	font-family:Tahoma,Arial;
+	font-size:10pt;
+	font-weight:none;
+	width:100%;
+}
+.profile_medical_readonly{
+	font-family:Tahoma,Arial;
+	font-size:10pt;
+	font-weight:none;
+	width:100%;
+}
+.profile_status_readonly{
+	font-family:Tahoma,Arial;
+	font-size:10pt;
+	font-weight:none;
+	width:100%;
+}
+.profile_appoint_readonly{
+	font-family:Tahoma,Arial;
+	font-size:10pt;
+	font-weight:none;
+	width:100%;
+}
+td.label{
+	font-weight:bold;
+	color:#7F1921;
+}
+
+td.value{
+	color:#7F1921;
+}
+
+#windowcontent{
+	background-color:#7F1921;
+}
+
+.user_hi {
+	color:#ffffff;
+}
+
+.user_hi a{
+	color:#ffffff;
+	text-decoration:none;
+}
+
+.user_hi a:hover{
+	text-decoration:underline;
+}
+  
+        
+.treeMenuDefault {
+    font-style: italic;
+}
+        
+.treeMenuBold {
+   font-style: italic;
+   font-weight: bold;
+}
+
+#dashmenu a{
+	color:#ffffff;
+	text-decoration:none;
+	font-size:14px;
+}
+#dashmenu a:hover{
+	text-decoration:underline;
+}
+
+
+
+
+
