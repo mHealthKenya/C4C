@@ -510,14 +510,15 @@ class processor extends CI_Model {
 
                 $getMFL = $this->db->get_where('tbl_master_facility', array('name' => $facility_id));
 
-                if ($getMFL->num_rows() > 0) {
+            if ($getMFL->num_rows() > 0) {
                     foreach ($getMFL->result() as $value) {
                         $mflID = $value->code;
                     }
                 }
             } else {
                 $mflID = $facility_id;
-            }
+           }
+		$mflID = $facility_id;
 
             $check_existence = $this->db->get_where('tbl_patientdetails', array('mobile_no' => $mobile_no))->num_rows();
 
@@ -587,9 +588,9 @@ class processor extends CI_Model {
                         }
                     }
                 }
-                echo json_encode(Welldone);
+                echo 'Welldone';
                 //send connfirmatory sms once registration is successfull
-                $this->android_confirmatory_message_outbox($mobile_no);
+//                $this->android_confirmatory_message_outbox($mobile_no);
 
 
                 //Check Broadcast Rights

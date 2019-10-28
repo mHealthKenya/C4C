@@ -199,10 +199,11 @@ class core extends MY_Controller {
             'registrationmode' => $mode
         );
 
-       $this->logREGs($SignUp);
+      // $this->logREGs($SignUp);
        // print_r($SignUp);
         $this->data->RegAppFac($SignUp); 
      // $this->data->SignupReg($SignUp);
+
         
         
     }
