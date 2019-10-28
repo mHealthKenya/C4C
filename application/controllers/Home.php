@@ -130,8 +130,10 @@ class Home extends MY_Controller {
         $data["results"] = $this->data->fetch_data($config["per_page"], $page);
         $data["links"] = $this->pagination->create_links();
         $data["counties"] = $this->data->getCounty();
+        $data["facility"] = $this->data->getFacilities();
+        $data["partner"] = $this->data->getpartner();
         // $third_uri = $this->uri->segment(3);
-
+           
         $this->load->view("rawdatas", $data);
     }
 
@@ -158,8 +160,11 @@ class Home extends MY_Controller {
 
     function filter_exposed() {
         $data["counties"] = $this->data->getCounty();
+        $data["facility"] = $this->data->getFacilities();
+        $data["partner"] = $this->data->getpartner();
         $county = $this->input->post('county', TRUE);
         //$data["county"] =$this->input->post('county', TRUE);
+        $data["county"] =$this->input->post('county', TRUE);
         $date_from = $this->input->post('from_date', TRUE);
         $date_to = $this->input->post('to_date', TRUE);
         $data["allexposed"] = $this->mymodel->get_exp($county, $date_from, $date_to);
@@ -169,13 +174,19 @@ class Home extends MY_Controller {
 
     function filter_registrations() {
         $data["counties"] = $this->data->getCounty();
+        $data["facility"] = $this->data->getFacilities();
+        $data["partner"] = $this->data->getpartner();
         $county = $this->input->post('county', TRUE);
-        //$data["county"] =$this->input->post('county', TRUE);
+        //$facility = $_SESSION['facility_id'];
+        $data["county"] =$this->input->post('county', TRUE);
         $date_from = $this->input->post('from_date', TRUE);
         $date_to = $this->input->post('to_date', TRUE);
         $data["allclients"] = $this->mymodel->get_mydata($county, $date_from, $date_to);
-        // $data = json_encode($hcws);
-        $this->load->view('clients_raw', $data, $county);
+
+        // echo json_encode($facility);
+        // exit;
+
+         $this->load->view('clients_raw', $data, $county);
     }
 
 

@@ -173,6 +173,8 @@ class core extends MY_Controller {
 
     }
 
+
+
     function SignUp() {
         
         $default_level = 3;
@@ -199,8 +201,6 @@ class core extends MY_Controller {
             'registrationmode' => $mode
         );
 
-      // $this->logREGs($SignUp);
-       // print_r($SignUp);
         $this->data->RegAppFac($SignUp); 
      // $this->data->SignupReg($SignUp);
 

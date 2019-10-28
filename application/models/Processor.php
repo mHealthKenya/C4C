@@ -506,10 +506,9 @@ class processor extends CI_Model {
 
             $facility_id = $SignUp['facility_id'];
 
-            if (is_string($facility_id)) {
+            // if (is_string($facility_id)) {
 
-                $getMFL = $this->db->get_where('tbl_master_facility', array('name' => $facility_id));
-
+            //     $getMFL = $this->db->get_where('tbl_master_facility', array('name' => $facility_id));
             if ($getMFL->num_rows() > 0) {
                     foreach ($getMFL->result() as $value) {
                         $mflID = $value->code;
