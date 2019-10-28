@@ -151,10 +151,12 @@ class Home extends MY_Controller {
     function rawExposures() {
         $wdata["allexposed"] = $this->data->getallexpo();
         $wdata["counties"] = $this->data->getCounty();
+        $wdata["facility"] = $this->data->getFacilities();
+        $wdata["partner"] = $this->data->getpartner();
         $third_uri = $this->uri->segment(3);
         //$data["allclients"] = $allclients;            
 
-        $this->load->view('expo_raw', $wdata);
+        $this->load->view('expo_raw');
         // echo json_encode($allclients);
     }
 
