@@ -778,6 +778,7 @@ INNER JOIN tbl_gender ON tbl_gender.id = tbl_patientdetails.gender_id AND tbl_ma
                 'logged_in' => TRUE,
                 'status' => $status,
                 'login' => $first_login,
+                'facility_id' => $facility_id,
                 'user_level' => $user_level,
                 'partner_id' => $partner_id
             );
@@ -1226,7 +1227,7 @@ INNER JOIN tbl_gender ON tbl_gender.id = tbl_patientdetails.gender_id AND tbl_ma
         return $sql;
     }
 
-    function get_mydata($county, $date_from, $date_to) {
+    function get_mydata($county,$date_from, $date_to) {
 
 
         if (!empty($date_from)) {
@@ -1242,25 +1243,41 @@ INNER JOIN tbl_gender ON tbl_gender.id = tbl_patientdetails.gender_id AND tbl_ma
             $formated_date_to = date("Y-m-d", strtotime($date_to));
         }
 
-        $this->db->select('first_name,last_name,mobile_no,gender,cadre,mfl_no,enrollment_date,facility,county,mfl_no');
-        $this->db->from('tbl_rawdata');
+        $query = "SELECT first_name,last_name,mobile_no,gender,cadre,enrollment_date,facility,county,mfl_no FROM tbl_rawdata where 1";
+
+
+        if ($_SESSION['user_level'] == 5) {
+            
+            $facility = $_SESSION['facility_id'];
+            $query .= " and mfl_no = '$facility' ";
+            
+        }
 
         if (!empty($county)) {
-            $this->db->where('county', $county);
+            $query .= " AND county =   '$county' ";
         }
+
+        // if(!empty($facility)){
+        //     $this->db->where('facility' , $facility);
+        // }
 
         if (!empty($date_from)) {
-            $this->db->where('enrollment_date >=    ', $formated_date_from);
+            $query .= " AND enrollment_date >=    '$formated_date_from' ";
         }
+        
         if (!empty($date_to)) {
-            $this->db->where('enrollment_date <=', $formated_date_to);
+            $query .= " AND enrollment_date <=    '$formated_date_to' ";
         }
+        // echo json_encode($date_from);
+        // exit;
 
-        $this->db->order_by('enrollment_date desc');
-        $sql = $this->db->get()->result_array();
+        $query .= " ORDER BY enrollment_date DESC";
+        $sql = $this->db->query($query)->result_array();
 
 
         return $sql;
+        // echo json_encode($county);
+        // exit;
     }
 
     function get_exp($county, $date_from, $date_to) {
@@ -1278,24 +1295,32 @@ INNER JOIN tbl_gender ON tbl_gender.id = tbl_patientdetails.gender_id AND tbl_ma
             $formated_date_to = date("Y-m-d", strtotime($date_to));
         }
 
-        $this->db->select('*');
-        $this->db->from('raw_exposures');
+        // $this->db->select('*');
+        // $this->db->from('raw_exposures');
 
 
+        $query = "SELECT * FROM tbl_raw_exposures WHERE 1";
+
+        if ($_SESSION['user_level'] == 5) {
+            
+            $facility = $_SESSION['facility_id'];
+            $query .= " and mfl_no = '$facility' ";
+            
+        }
 
 
         if (!empty($county)) {
-            $this->db->where('county', $county);
+            $query .= " AND county =   '$county' ";
         }
 
         if (!empty($date_from)) {
-            $this->db->where('date_registered >=    ', $formated_date_from);
+            $query .= " AND date_registered >=    '$formated_date_from' ";
         }
         if (!empty($date_to)) {
-            $this->db->where('date_registered <=', $formated_date_to);
+            $query .= " AND date_registered <=    '$formated_date_to' ";
         }
 
-        $sql = $this->db->get()->result_array();
+        $sql = $this->db->query($query)->result_array();
 
         return $sql;
     }
