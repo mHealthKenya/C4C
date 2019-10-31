@@ -506,9 +506,10 @@ class processor extends CI_Model {
 
             $facility_id = $SignUp['facility_id'];
 
-            // if (is_string($facility_id)) {
 
-            //     $getMFL = $this->db->get_where('tbl_master_facility', array('name' => $facility_id));
+             if (!is_numeric($facility_id)) {
+
+                 $getMFL = $this->db->get_where('tbl_master_facility', array('name' => $facility_id));
             if ($getMFL->num_rows() > 0) {
                     foreach ($getMFL->result() as $value) {
                         $mflID = $value->code;
@@ -517,7 +518,6 @@ class processor extends CI_Model {
             } else {
                 $mflID = $facility_id;
            }
-		$mflID = $facility_id;
 
             $check_existence = $this->db->get_where('tbl_patientdetails', array('mobile_no' => $mobile_no))->num_rows();
 
@@ -589,7 +589,7 @@ class processor extends CI_Model {
                 }
                 echo 'Welldone';
                 //send connfirmatory sms once registration is successfull
-//                $this->android_confirmatory_message_outbox($mobile_no);
+                //                $this->android_confirmatory_message_outbox($mobile_no);
 
 
                 //Check Broadcast Rights
@@ -659,10 +659,11 @@ class processor extends CI_Model {
                 //Check Broadcast Rights
                 // $this->IsFacilityUser($mobile_no);
             }
-        } else {
-            echo 'Invalid Mobile Number';
-        }
+        //        } else {
+        //          echo 'Invalid Mobile Number';
+            //    }
     }
+}
 
     //New Signup android
     function SignupReg($SignUp) {
@@ -968,7 +969,7 @@ class processor extends CI_Model {
     // }
     //Create  android user Profile
     function RegApp($SignUp) {
-//        $mobile_no = $SignUp['mobile_no'];
+        //        $mobile_no = $SignUp['mobile_no'];
 
         $mobileNO = $SignUp['mobile_no'];
 
@@ -977,7 +978,7 @@ class processor extends CI_Model {
 
         if ($len < 10) {
             $mobile_no = "+254" . $mobile;
-//            echo 'umber  oncat ' . $mobile_no;
+        //            echo 'umber  oncat ' . $mobile_no;
         } else {
             $mobile_no = $mobileNO;
             // echo 'Number  without cncat ' . $mobile_no;
@@ -995,7 +996,7 @@ class processor extends CI_Model {
             if ($insert) {
                 //$mno = $SignUp['mobile_no'];
                 //send connfirmatory sms upon successfull registration
-//                $this->android_confirmatory_message_outbox($mno);
+        //                $this->android_confirmatory_message_outbox($mno);
                 // echo 'Welldone';
             } else {
                 echo 'Failed ';
@@ -4848,11 +4849,11 @@ class processor extends CI_Model {
                 $adherence_level = 7;
                 $this->messages_adherence($text, $adherence_level, $mob_no, $hcw_id);
             }
-//            if ($minutes == 7560) {
-//                $text = 21;
-//                $adherence_level = 8;
-//                $this->messages_adherence($text, $adherence_level, $mob_no, $hcw_id);
-//            }
+                //            if ($minutes == 7560) {
+                //                $text = 21;
+                //                $adherence_level = 8;
+                //                $this->messages_adherence($text, $adherence_level, $mob_no, $hcw_id);
+                //            }
             if ($minutes == 10080) {
                 $text = 55;
                 $adherence_level = 9;
@@ -5023,26 +5024,26 @@ class processor extends CI_Model {
 
 
 
-//            $query_date_created = $this->db->query("SELECT date_received,msg FROM `tbl_logs_inbox` WHERE msg LIKE '%yes'  and mobile_no='$mob_no'");
-//            if ($query_date_created->num_rows() > 0) {
-//                $date = $query_date_created->result();
-//                foreach ($date as $dates) {
-//                    $r_date = $dates->date_received;
-//                    $date_sent = strtotime($r_date);
-//                    $datetime = strtotime("now");
-//                    $substract = $datetime - $date_sent;
-//                    $r_days = $substract / 86400;
-//                    $response_hour = $substract / 3600;
-//                    $res_hours = round($response_hour);
-//                    $days = round($r_days);
-//
-//                    if ($minutes == 4320 && $res_hours <= 1) {
-//                        $text = 71;
-//                        $adherence_level = 4;
-//                        $this->messages_adherence($text, $adherence_level, $mob_no, $hcw_id);
-//                    }
-//                }
-//            }
+            //            $query_date_created = $this->db->query("SELECT date_received,msg FROM `tbl_logs_inbox` WHERE msg LIKE '%yes'  and mobile_no='$mob_no'");
+            //            if ($query_date_created->num_rows() > 0) {
+            //                $date = $query_date_created->result();
+            //                foreach ($date as $dates) {
+            //                    $r_date = $dates->date_received;
+            //                    $date_sent = strtotime($r_date);
+            //                    $datetime = strtotime("now");
+            //                    $substract = $datetime - $date_sent;
+            //                    $r_days = $substract / 86400;
+            //                    $response_hour = $substract / 3600;
+            //                    $res_hours = round($response_hour);
+            //                    $days = round($r_days);
+            //
+            //                    if ($minutes == 4320 && $res_hours <= 1) {
+            //                        $text = 71;
+            //                        $adherence_level = 4;
+            //                        $this->messages_adherence($text, $adherence_level, $mob_no, $hcw_id);
+            //                    }
+            //                }
+            //            }
 
             $response = $this->check_responses($hcw_id);
             foreach ($response as $res) {

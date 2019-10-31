@@ -43,6 +43,7 @@ class core extends MY_Controller {
 
 
     function CountySearch() {
+    
         $returned_value = $this->data->SearchCnty();
 
         $items = json_encode(array('result' => $returned_value));

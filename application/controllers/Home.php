@@ -191,10 +191,6 @@ class Home extends MY_Controller {
          $this->load->view('clients_raw', $data, $county);
     }
 
-
-    
-
-
     function sentsms() {
         $data["counties"] = $this->data->getCounty();
         $county = $this->input->post('county', TRUE);
