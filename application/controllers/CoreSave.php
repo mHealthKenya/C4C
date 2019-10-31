@@ -41,7 +41,10 @@ class core extends MY_Controller {
         
     }
 
-    function CountySearchTest() {
+  function CountySearchTest() {
+  //      $returned_value = $this->data->SearchCnty();
+
+//        $items = json_encode(array('result' => $returned_value));
         echo "In here";
 
     }
@@ -53,6 +56,10 @@ class core extends MY_Controller {
 
         $items = json_encode(array('result' => $returned_value));
         echo $items;
+//        $cntyDATA = array(
+//            'cntyID' => $this->input->post('cntyID')
+//        );
+//        $this->data->SearchCnty($cntyDATA);
     }
 
     function SubCountySearch() {
@@ -83,7 +90,13 @@ class core extends MY_Controller {
 
         $items = json_encode(array('result' => $returned_value));
         echo $items;
-
+//        if (empty($returned_value)) {
+//            $items = json_encode($returned_value);
+//            echo $items;
+//        } else {
+//            $items = json_encode(array('result' => $returned_value));
+//            echo $items;
+//        }
     }
 
     function fixsms() {
@@ -109,6 +122,7 @@ class core extends MY_Controller {
             'level' => $default_level
         );
 
+//        $this->RegApp($data);
         $this->data->RegApp($SignUp);
     }
 
@@ -121,10 +135,22 @@ class core extends MY_Controller {
                 $id = $value->id;
                 $mfl = $value->facility_id;
 
+//                $getMFL = $this->db->query("select name,code from tbl_master_facility_copy where name='$mfl'");
                 $getMFL = $this->db->get_where('tbl_master_facility_copy', array('name' => $mfl));
 
                 if ($getMFL->num_rows() > 0) {
                     foreach ($getMFL->result() as $value) {
+
+//                        $mobile = substr($mobileNO, -9);
+//                        $len = strlen($mobile);
+//
+//                        if ($len < 10) {
+//                            $mobile_no = "+254" . $mobile;
+////            echo 'Number  oncat ' . $mobile_no;
+//                        } else {
+//                            $mobile_no = $mobileNO;
+////            echo 'Number  without cncat ' . $mobile_no;
+//                        }
                         $mflid = $value->code ;
 
                         $Register = array(
@@ -144,6 +170,7 @@ class core extends MY_Controller {
             'mobile_no' => $this->input->post('phone_no')
             );
             $this->data->SearchMobile($Mno);
+
 
     }
     function hi(){
@@ -184,7 +211,9 @@ class core extends MY_Controller {
         );
 
         $this->data->RegAppFac($SignUp); 
-     
+     // $this->data->SignupReg($SignUp);
+
+        
         
     }
     function SignUpTest() {
@@ -208,9 +237,30 @@ class core extends MY_Controller {
             'level' => $default_level
         );
 
+//        $this->RegApp($data);
         $this->data->RegAppFac($SignUp);
     }
     
+
+    //Android create Profile API
+//    function CreateProf() {
+//        $default_level = 5;
+//        $Prof = array(
+//            'partner_id' => "33",
+//            'specs' => "23",
+//            'gender_id' => "2",
+//            'cadre_id' => "1",
+//            'national_id' => "235434",
+//            'DOB' => "1994/12/09",
+//            'facility_id' => "12345",
+//            'mobile_no' => "0713559850",
+//            //Update Level
+//            'level' => "5"
+//        );
+//
+//
+//        $this->data->CreateProf($Prof);
+//    }
     function CreateProf() {
         $default_level = 3;
         $mode = 2;
@@ -235,6 +285,7 @@ class core extends MY_Controller {
             'registrationmode' => $mode
         );      
 
+//        $this->RegApp($data);
         $this->data->RegAppFac($SignUp);      
         
     }
@@ -288,25 +339,25 @@ class core extends MY_Controller {
         $query = $this->db->query(" SELECT  DISTINCT mobile_no,cadre FROM `tbl_sentandreceivedsms` WHERE cadre !='Cleaner'");
         // $query = $this->db->query(" SELECT * FROM `tbl_cadre` ");
 
-        foreach ($query->result_array() as $row)
-        {
-                // $mno->mobile_no;
-                $mobile_no = $row['mobile_no'];
-                $mno = array('mobile_no' => $mobile_no);
+foreach ($query->result_array() as $row)
+{
+         // $mno->mobile_no;
+         $mobile_no = $row['mobile_no'];
+         $mno = array('mobile_no' => $mobile_no);
 
-                $items = array_merge($mno, $bm);
-                print_r($items);
-                // echo "string ".$mobile_no;
+         $items = array_merge($mno, $bm);
+         print_r($items);
+         // echo "string ".$mobile_no;
 
-                
-                $insert = $this->db->insert('tbl_logs_broadcast', $items);
+         
+         $insert = $this->db->insert('tbl_logs_broadcast', $items);
 
-                if ($insert) {
-                    echo "Tuko ";
-                }else{
-                    echo "Zii";
-                }
-        }
+         if ($insert) {
+            echo "Tuko ";
+         }else{
+            echo "Zii";
+         }
+}
 
     
     }
@@ -374,7 +425,18 @@ class core extends MY_Controller {
                 if ($mob_no == $phone_no || $mob_no != $phone_no) {
                     echo 'Oops , Client exists!';
                 }
-
+//                else if ($mob_no != $phone_no) {
+//                    //if ($mob_no !== $phone_no) {
+//                    $insert = $this->db->insert('tbl_patientdetails', $data);
+//
+//                    if ($insert) {
+//                        echo 'Done ';
+//                        //$this->response($data, 200);
+//                    } else {
+//                        echo 'Failed ';
+//                        //$this->response(array('status' => 'fail', 502));
+//                    }
+//                }
             }
         } else {
             //if ($mob_no !== $phone_no) {
@@ -388,7 +450,34 @@ class core extends MY_Controller {
                 //$this->response(array('status' => 'fail', 502));
             }
         }
-
+//        $lname = $this->input->post('lname');
+//        $date_added = date("Y-m-d H:i:s");
+//        $creation_date = date("Y-m-d H:i:s");
+//        $cadre_id = $this->input->post('cadre_id');
+//        $gender = $this->input->post('gender_id');
+//        $dob = $this->input->post('dob');
+//        $facility_id = $this->input->post('facility_id');
+//        $idNo = $this->input->post('idno');
+//        $hbv = $this->input->post('hbv');
+//        $registrationmode = 1;
+//        $partner = 2;
+//        $mobile = substr($mobile_no, -9);
+//        $len = strlen($mobile);
+//        $check_existence = $this->db->get_where('tbl_patientdetails', array('mobile_no' => $phone_no))->num_rows();
+//        $getMOB = $this->db->get_where('tbl_patientdetails', array('mobile_no' => $phone_no))->result_array();
+//
+//        if ($check_existence >= 1) {
+//            foreach ($getMOB as $value) {
+//                $mob_no = $value['mobile_no'];
+//                if ($mob_no === $phone_no) {
+//                    return 'Exists';
+//                }
+//            }
+//        } else if ($check_existence == 0) {
+//
+//            $this->AddHcwUcsf($fname, $phone_no, $lname, $date_added, $cadre_id, $gender, $dob, $facility_id, $registrationmode, $partner, $idNo, $hbv, $creation_date);
+//            return'Not Exist';
+//        }
     }
 
     function syncREGandSMS() {
@@ -398,7 +487,7 @@ class core extends MY_Controller {
     //Get max client IDs
     //Use this function to check if datasync is working
 
-    function DWHmaxID() {
+     function DWHmaxID() {
        
         
         $dwh_db = $this->load->database('post_C4C', TRUE);
@@ -415,6 +504,27 @@ class core extends MY_Controller {
         // print_r($items);
         echo 'Clients exp '.$items;
 
+
+        // $getDWH = $dwh_db->query('select max(client_id) as client_id from tbl_smslogs');
+        // foreach ($getDWH->result_array() as $value) {
+        //     $current_id = $value['client_id'];
+        //      // print("DWH ID= ".$current_id);
+              
+
+        //     $getnewid = $c4c_db->query("select * from tbl_sentandreceivedsms where client_id >= '$current_id'");
+        //     foreach ($getnewid->result_array() as $data) {
+        //         $hcw_id = $data['client_id'];
+        //         $updated_at = $data['updated_at'];
+        //         $addedOn = $data['date_registered'];
+        //         $sentsms = $data['sentsms'];
+
+        //          print("DWH ID= ".$current_id." EADC ID = ".$hcw_id."<br>"); 
+
+               
+        //     }
+        // }
+
+
     }
 
 
@@ -429,108 +539,114 @@ class core extends MY_Controller {
 
 
         $ulizas = "SELECT  
-            tbl_staffdetails.id AS user_id,
-            tbl_staffdetails.user_name AS user_name,
-            tbl_staffdetails.user_mobile AS user_mobile,
-            tbl_staffdetails.user_level AS user_level,
-            tbl_county.`name` AS county,
-            tbl_sub_county.`name` AS sub_county,
-            tbl_master_facility.name AS facility,
-            tbl_staffdetails.created AS created,
-            tbl_staffdetails.status AS user_status 
-            FROM
-            tbl_staffdetails 
-            INNER JOIN tbl_master_facility 
-                ON tbl_master_facility.code = tbl_staffdetails.facility 
-            INNER JOIN tbl_county 
-                ON tbl_county.id = tbl_master_facility.county_id 
-            INNER JOIN tbl_sub_county 
-                ON tbl_sub_county.id = tbl_master_facility.Sub_County_ID 
-            WHERE user_level = 7 and  tbl_staffdetails.status='Active'";
-                $uliza = "SELECT
-            count(`c`.`id` )AS `client_id`,
-            ( CASE WHEN ( `c`.`level` = 6 ) THEN 'complete' ELSE 'incomplete' END ) AS `reg_status`,
-            COALESCE (
-            ( CASE WHEN ( `c`.`partner_id` = '1' ) THEN 'UCSF' WHEN ( `c`.`partner_id` = '2' ) THEN 'Nascop' END ),
-            'Not_Specified' 
-            ) AS `Partner_old`,
-            trim( `c`.`national_id` ) AS `national_id`,
-            concat(
-            ucase( substr( concat( trim( `c`.`f_name` ) ), 1, 1 ) ),
-            lcase( substr( concat( trim( `c`.`f_name` ) ), 2 ) ) 
-            ) AS `first_name`,
-            concat(
-            ucase( substr( concat( trim( `c`.`l_name` ) ), 1, 1 ) ),
-            lcase( substr( concat( trim( `c`.`l_name` ) ), 2 ) ) 
-            ) AS `last_name`,
-            `c`.`mobile_no` AS `mobile_no`,
-            COALESCE ( `c`.`DOB`, 'Empty' ) AS `dob`,
-            timestampdiff( YEAR, makedate( `c`.`DOB`, 1 ), curdate( ) ) AS `age`,
-            cast( `c`.`date_registered` AS date ) AS `enrollment_date`,
-            COALESCE ( `ag`.`age_group`, 'Empty' ) AS `age_group`,
-            COALESCE (
-            concat(
-            ucase( substr( concat( trim( `g`.`name` ) ), 1, 1 ) ),
-            lcase( substr( concat( trim( `g`.`name` ) ), 2 ) ) 
-            ),
-            'Empty' 
-            ) AS `gender`,
-            COALESCE ( `cdr`.`name`, 'Empty' ) AS `cadre`,
-            COALESCE ( `c`.`facility_id`, 'Empty' ) AS `mfl_no`,
-            `c`.`date_registered` AS `date_registered`,
-            COALESCE ( `h`.`name`, 'Empty' ) AS `hepatitsb_status`,
-            COALESCE ( `k`.`name`, 'Empty' ) AS `sub_county`,
-            COALESCE ( `t`.`name`, 'Empty' ) AS `county`,
-            COALESCE ( `f`.`keph_level`, 'Empty' ) AS `facility_level`,
-            COALESCE ( `f`.`name`, 'Empty' ) AS `facility`,
-            COALESCE ( `inb`.`msg`, 'Empty' ) AS `receivedsms`,
-            COALESCE ( `msgid`.`messages`, 'Empty' ) AS `sentsms`,
-            COALESCE ( `msgcat`.`name`, 'Empty' ) AS `categ_name`,
-            COALESCE ( `mod`.`name`, 'Empty' ) AS `source`,
-                COALESCE ( `ptn`.`name`, 'Empty' ) AS `Partner`
-        FROM
-            (
-                (
-            (
-            (
-            (
-            (
-            (
-            (
-            (
-            (
-            (
-                (
-            (
-            ( `tbl_patientdetails` `c` JOIN `tbl_gender` `g` ON ( ( `c`.`gender_id` = `g`.`id` ) ) )
-            LEFT JOIN `tbl_cadre` `cdr` ON ( ( `c`.`cadre_id` = `cdr`.`id` ) ) 
-            )
-            LEFT JOIN `tbl_hepatitsb` `h` ON ( ( `c`.`hepatitis_b` = `h`.`id` ) ) 
-            )
-            LEFT JOIN `tbl_age_group` `ag` ON ( ( `c`.`age_group` = `ag`.`id` ) ) 
-            )
-            LEFT JOIN `tbl_master_facility` `f` ON ( ( `c`.`facility_id` = `f`.`code` ) ) 
-            )
-            LEFT JOIN `tbl_county` `t` ON ( ( `f`.`county_id` = `t`.`id` ) ) 
-            )
-            LEFT JOIN `tbl_sub_county` `k` ON ( ( `f`.`Sub_County_ID` = `k`.`id` ) ) 
-            )
-            LEFT JOIN `tbl_logs_inbox` `inb` ON ( ( `inb`.`mobile_no` = `c`.`mobile_no` ) ) 
-            )
-            LEFT JOIN `tbl_logs_outbox` `outb` ON ( ( `outb`.`mobile_no` = `c`.`mobile_no` ) ) 
-            )
-            LEFT JOIN `tbl_messages` `msgid` ON ( ( `msgid`.`id` = `outb`.`message_id` ) ) 
-            )
-            LEFT JOIN `tbl_category` `msgcat` ON ( ( `msgcat`.`id` = `msgid`.`category_id` ) ) 
-            )
-            LEFT JOIN `tbl_registration_mode` `mod` ON ( ( `mod`.`id` = `c`.`registrationmode` ) ) 
-            )
-                LEFT JOIN `tbl_PartnerClients` `ptnc` ON ( ( `ptnc`.`hcwID` = `c`.`id` ) ) 
-            )
-                LEFT JOIN `tbl_partners` `ptn` ON ( ( `ptn`.`id` = `ptnc`.`id` ) ) 
-            )";
+      tbl_staffdetails.id AS user_id,
+      tbl_staffdetails.user_name AS user_name,
+      tbl_staffdetails.user_mobile AS user_mobile,
+      tbl_staffdetails.user_level AS user_level,
+      tbl_county.`name` AS county,
+      tbl_sub_county.`name` AS sub_county,
+      tbl_master_facility.name AS facility,
+      tbl_staffdetails.created AS created,
+      tbl_staffdetails.status AS user_status 
+    FROM
+      tbl_staffdetails 
+      INNER JOIN tbl_master_facility 
+        ON tbl_master_facility.code = tbl_staffdetails.facility 
+      INNER JOIN tbl_county 
+        ON tbl_county.id = tbl_master_facility.county_id 
+      INNER JOIN tbl_sub_county 
+        ON tbl_sub_county.id = tbl_master_facility.Sub_County_ID 
+    WHERE user_level = 7 and  tbl_staffdetails.status='Active'";
+        $uliza = "SELECT
+    count(`c`.`id` )AS `client_id`,
+    ( CASE WHEN ( `c`.`level` = 6 ) THEN 'complete' ELSE 'incomplete' END ) AS `reg_status`,
+    COALESCE (
+    ( CASE WHEN ( `c`.`partner_id` = '1' ) THEN 'UCSF' WHEN ( `c`.`partner_id` = '2' ) THEN 'Nascop' END ),
+    'Not_Specified' 
+    ) AS `Partner_old`,
+    trim( `c`.`national_id` ) AS `national_id`,
+    concat(
+    ucase( substr( concat( trim( `c`.`f_name` ) ), 1, 1 ) ),
+    lcase( substr( concat( trim( `c`.`f_name` ) ), 2 ) ) 
+    ) AS `first_name`,
+    concat(
+    ucase( substr( concat( trim( `c`.`l_name` ) ), 1, 1 ) ),
+    lcase( substr( concat( trim( `c`.`l_name` ) ), 2 ) ) 
+    ) AS `last_name`,
+    `c`.`mobile_no` AS `mobile_no`,
+    COALESCE ( `c`.`DOB`, 'Empty' ) AS `dob`,
+    timestampdiff( YEAR, makedate( `c`.`DOB`, 1 ), curdate( ) ) AS `age`,
+    cast( `c`.`date_registered` AS date ) AS `enrollment_date`,
+    COALESCE ( `ag`.`age_group`, 'Empty' ) AS `age_group`,
+    COALESCE (
+    concat(
+    ucase( substr( concat( trim( `g`.`name` ) ), 1, 1 ) ),
+    lcase( substr( concat( trim( `g`.`name` ) ), 2 ) ) 
+    ),
+    'Empty' 
+    ) AS `gender`,
+    COALESCE ( `cdr`.`name`, 'Empty' ) AS `cadre`,
+    COALESCE ( `c`.`facility_id`, 'Empty' ) AS `mfl_no`,
+    `c`.`date_registered` AS `date_registered`,
+    COALESCE ( `h`.`name`, 'Empty' ) AS `hepatitsb_status`,
+    COALESCE ( `k`.`name`, 'Empty' ) AS `sub_county`,
+    COALESCE ( `t`.`name`, 'Empty' ) AS `county`,
+    COALESCE ( `f`.`keph_level`, 'Empty' ) AS `facility_level`,
+    COALESCE ( `f`.`name`, 'Empty' ) AS `facility`,
+    COALESCE ( `inb`.`msg`, 'Empty' ) AS `receivedsms`,
+    COALESCE ( `msgid`.`messages`, 'Empty' ) AS `sentsms`,
+    COALESCE ( `msgcat`.`name`, 'Empty' ) AS `categ_name`,
+    COALESCE ( `mod`.`name`, 'Empty' ) AS `source`,
+        COALESCE ( `ptn`.`name`, 'Empty' ) AS `Partner`
+FROM
+    (
+        (
+    (
+    (
+    (
+    (
+    (
+    (
+    (
+    (
+    (
+        (
+    (
+    ( `tbl_patientdetails` `c` JOIN `tbl_gender` `g` ON ( ( `c`.`gender_id` = `g`.`id` ) ) )
+    LEFT JOIN `tbl_cadre` `cdr` ON ( ( `c`.`cadre_id` = `cdr`.`id` ) ) 
+    )
+    LEFT JOIN `tbl_hepatitsb` `h` ON ( ( `c`.`hepatitis_b` = `h`.`id` ) ) 
+    )
+    LEFT JOIN `tbl_age_group` `ag` ON ( ( `c`.`age_group` = `ag`.`id` ) ) 
+    )
+    LEFT JOIN `tbl_master_facility` `f` ON ( ( `c`.`facility_id` = `f`.`code` ) ) 
+    )
+    LEFT JOIN `tbl_county` `t` ON ( ( `f`.`county_id` = `t`.`id` ) ) 
+    )
+    LEFT JOIN `tbl_sub_county` `k` ON ( ( `f`.`Sub_County_ID` = `k`.`id` ) ) 
+    )
+    LEFT JOIN `tbl_logs_inbox` `inb` ON ( ( `inb`.`mobile_no` = `c`.`mobile_no` ) ) 
+    )
+    LEFT JOIN `tbl_logs_outbox` `outb` ON ( ( `outb`.`mobile_no` = `c`.`mobile_no` ) ) 
+    )
+    LEFT JOIN `tbl_messages` `msgid` ON ( ( `msgid`.`id` = `outb`.`message_id` ) ) 
+    )
+    LEFT JOIN `tbl_category` `msgcat` ON ( ( `msgcat`.`id` = `msgid`.`category_id` ) ) 
+    )
+    LEFT JOIN `tbl_registration_mode` `mod` ON ( ( `mod`.`id` = `c`.`registrationmode` ) ) 
+    )
+        LEFT JOIN `tbl_PartnerClients` `ptnc` ON ( ( `ptnc`.`hcwID` = `c`.`id` ) ) 
+    )
+        LEFT JOIN `tbl_partners` `ptn` ON ( ( `ptn`.`id` = `ptnc`.`id` ) ) 
+    )";
 
-
+//        $items = $this->db->query($uliza)->result_array();
+//        $save = array(
+//            'name' => 'FH1360'
+//        );
+//        //Save to a text file if insert fails while debugging
+//        $this->db->insert('tbl_partners', $save);
+//        $returned_value = $this->db->get_where('tbl_partners', array('name' => 'FH1360'))->result_array();
         $ulizaa = "SELECT * from tbl_stafffdetails";
         $items = $this->db->query($ulizaa)->result_array();
 
@@ -547,7 +663,7 @@ class core extends MY_Controller {
         // print_r($array);       
         // $contnt = "10+2+7+4+8+6";
        // $array = explode("+", $contnt);
-         foreach ($array as $key => $value) {
+                            foreach ($array as $key => $value) {
 
            echo "{$key} => {$value} </br>";
            // echo "{$key} ";
@@ -603,9 +719,104 @@ class core extends MY_Controller {
     }
   }
 
+    function test() {
 
 
-    //runs every minute 
+         // echo "here it is awt";
+         // echo base64_decode('MioyKjYqMioyKjIqMSoyKjA1LzAzLzIwMTkgMTE6MjAqMiowKjAqLTEqMA==');
+
+        // base64_encode('Test Monday*22/2/2019*5+4+*test');
+        // echo "strings";
+        // $query = $this->db->query("update tbl_smslogs_new set national_id=1 where national_id=14504005 ");
+
+        // $query = $this->db->query("SELECT f.`hcwID` ,f.`PatName`,c.`id`,c.`partner_id`,c.`date_registered` FROM `tbl_patientdetails` `c` LEFT JOIN `tbl_PartnerClients_copy` `f` ON  `f`.`hcwID` = `c`.`id` WHERE c.`partner_id`  != 'NULL' ;");
+//         $query = $this->db->query("SELECT f.`hcwID` ,f.`PatName`,c.`id`,c.`partner_id`,c.`date_registered` FROM `tbl_patientdetails` `c` 
+// LEFT JOIN `tbl_PartnerClients_copy` `f` ON  `f`.`hcwID` = `c`.`id` WHERE c.`registrationmode`  = '1' order by id asc");
+
+// foreach ($query->result() as $value)
+// {
+//        $hcw_id=$value->id;
+//        $partner= $value->partner_id;  
+//        $id= $value->hcw_id; 
+//        $dReg= $value->date_registered;
+
+//         // echo "patn => ".$hcw_id ." Date Added => ".$dReg ." ID => ".$partner."</br>";
+
+       
+
+//                         $array = explode("+", $partner);
+
+//                         foreach ($array as $key => $value) {
+//                              // print_r($value);
+//                             // echo "patn = ".$hcw_id ." value ".$value."</br>";
+//                             // exit;
+
+
+//                             // switch ($value) {
+
+//                             //     case 1:
+//                             //     // echo "one herwe";
+
+//                             //         $partner = 1;
+//                             //         $this->SavePtnID($hcw_id, $partner);
+//                             //          // echo "ID = ".$hcw_id ." patn ".$partner."</br>";
+//                             //         break;
+//                             //     case 2:
+//                             //         $partner = 2;
+//                             //         $this->SavePtnID($hcw_id, $partner);
+//                             //         break;
+//                             //     case 3:
+//                             //         $partner = 3;
+//                             //         $this->SavePtnID($hcw_id, $partner);
+//                             //         break;
+//                             //     case 4:
+//                             //         $partner = 4;
+//                             //         $this->SavePtnID($hcw_id, $partner);
+//                             //         break;
+//                             //     case 5:
+//                             //         $partner = 5;
+//                             //         $this->SavePtnID($hcw_id, $partner);
+//                             //         break;
+//                             //     case 6:
+//                             //         $partner = 6;
+//                             //         $this->SavePtnID($hcw_id, $partner);
+//                             //         break;
+//                             //     case 7:
+//                             //         $partner = 7;
+//                             //         $this->SavePtnID($hcw_id, $partner);
+//                             //         break;
+//                             //     case 8:
+//                             //         $partner = 8;
+//                             //         $this->SavePtnID($hcw_id, $partner);
+//                             //         break;
+//                             //     case 9:
+//                             //         $partner = 9;
+//                             //         $this->SavePtnID($hcw_id, $partner);
+//                             //         break;
+//                             //     default:
+//                             //         break;
+//                             // }
+                        
+//         // echo "patn => ".$hcw_id ." Date Added => ".$dReg ." ID => ".$partner."</br>";
+
+//        }
+      
+
+//     }
+// }
+
+//     function SavePtnID($hcw_id, $partner) {
+
+//         $AddPat = array(
+//             'hcwID' => $hcw_id,
+//             'PatName' => $partner
+//         );
+//         $this->db->insert('tbl_PartnerClients_copy', $AddPat);
+//                 echo "inserted new IDs => ".$partner ." Client ID => ".$hcw_id."</br>";
+
+    }
+
+//runs every minute 
     function index() {
         $this->data->receiver_processor();
     }
@@ -662,7 +873,7 @@ class core extends MY_Controller {
 
                 // curl_setopt($ch, CURLOPT_URL, "http://c4c-test.localhost/index.php/core");
                 //$LastInsertId
-                curl_setopt($ch, CURLOPT_URL, "http://41.220.229.138/KAPS/index.php/Survey/");
+                curl_setopt($ch, CURLOPT_URL, "http://41.220.229.130/KAPS/index.php/Survey/");
                 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
                 curl_setopt($ch, CURLOPT_HEADER, 0);
 
@@ -713,7 +924,40 @@ class core extends MY_Controller {
         // $this->data->confirmatory_message();
     }
 
-
+    function rune() {
+        $this->data->run();
+//        $address = "Cafe Coffee Day, INSIDE HPCL Petrol Bunk, Mumbai - Goa Highway,    Mangaon, Maharashtra, India";
+//        $url = "http://maps.google.com/maps/api/geocode/json?address=" . urlencode($address) . "&sensor=false&region=India";
+//        $ch = curl_init();
+//        curl_setopt($ch, CURLOPT_URL, $url);
+//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+//        curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
+//        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+//        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+//        $response = curl_exec($ch);
+//        curl_close($ch);
+//        $response_a = json_decode($response);
+//        $lat = $output->results[0]->geometry->location->lat;
+//        $long = $output->results[0]->geometry->location->lng;
+//        echo $lat = $response_a->results[0]->geometry->location->lat;
+//        echo "<br />";
+//        echo $long = $response_a->results[0]->geometry->location->lng;
+//        $url = "http://maps.google.com/maps/api/geocode/json?address=UK+Hull&sensor=false&region=England";
+//
+//        $ch = curl_init();
+//        curl_setopt($ch, CURLOPT_URL, $url);
+//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+//        curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
+//        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+//        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+//        $response = curl_exec($ch);
+//        curl_close($ch);
+//
+//        $response = json_decode($response);
+//
+//        $lat = $response->results[0]->geometry->location->lat;
+//        $long = $response->results[0]->geometry->location->lng;
+    }
 
     //Text supervisor to respond to check-in request by a student
     function TextSup() {
@@ -727,7 +971,7 @@ class core extends MY_Controller {
 
     //AfyaPoa links
     function RegisterClient() {
-        //         $default_level = 3;
+//         $default_level = 3;
         $dateTime = date("Y-m-d h:i:s");
 
         $RegClient = array(
@@ -752,9 +996,8 @@ class core extends MY_Controller {
             'username' => $this->input->post('username'),
             'password' => $this->input->post('password')
         );
-        //        $this->RegApp($data);
+//        $this->RegApp($data);
         $this->data->RegClnt($RegClient);
     }
 
 }
-
