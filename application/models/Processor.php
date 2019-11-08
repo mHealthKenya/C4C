@@ -1,3 +1,4 @@
+
 <?php
 
 /*
@@ -1332,20 +1333,17 @@ class processor extends CI_Model {
         $query = "SELECT id,name from tbl_partners";
         return $this->db->query($query)->result_array();
     }
-    
 
     function syncREGandSMS() {
         $dwh_db = $this->load->database('post_C4C', TRUE);
-        //$c4c_db = $this->load->database('c4cDB', TRUE); // the TRUE paramater tells CI that you'd like to return the database object.
+        ////$c4c_db = $this->load->database('c4cDB', TRUE); // the TRUE paramater tells CI that you'd like to return the database object.
 
         $getDWH = $dwh_db->query('select max(client_id) as client_id from tbl_smslogs');
         foreach ($getDWH->result_array() as $value) {
             $current_id = $value['client_id'];
-            //                print_r($current_id); 
+//                print_r($current_id); 
 
-            $getnewid = $this->db->query("select * from tbl_sentandreceivedsms where client_id > '$current_id'");
-            //echo $getnewid . 'New IDs';
-
+            $getnewid = $this->db->query("select * from tableau_sync where client_id > '$current_id'");
             foreach ($getnewid->result_array() as $data) {
                 $hcw_id = $data['client_id'];
                 $updated_at = $data['updated_at'];
@@ -1353,8 +1351,8 @@ class processor extends CI_Model {
                 $sentsms = $data['sentsms'];
 
                 if ($updated_at == $addedOn) {
-                    //                    $leo = date("Y-m-d");
-                        //                    print_r($leo);
+//                    $leo = date("Y-m-d");
+//                    print_r($leo);
                     echo 'Inserted client ID =>  ' . $hcw_id . ' Updated At ' . $updated_at . ' Added On ' . $addedOn . ' sent SMS ' . $sentsms . '<br>';
                     $dwh_db->insert('tbl_smslogs', $data);
                 } else {
@@ -1371,7 +1369,7 @@ class processor extends CI_Model {
 
     function syncRawData() {
         // $dwh_db = $this->load->database('post_C4C', TRUE);
-        // $c4c_db = $this->load->database('c4cDB', TRUE); // the TRUE paramater tells CI that you'd like to return the database object.
+        // //$c4c_db = $this->load->database('c4cDB', TRUE); // the TRUE paramater tells CI that you'd like to return the database object.
 
         $getDWH = $this->db->query('select max(client_id) as client_id from tbl_rawdata limit 1');
         foreach ($getDWH->result_array() as $value) {
@@ -1404,7 +1402,7 @@ class processor extends CI_Model {
     function syncExposures() {
 
         $dwh_db = $this->load->database('post_C4C', TRUE);
-        $c4c_db = $this->load->database('c4cDB', TRUE); // the TRUE paramater tells CI that you'd like to return the database object.
+        ////$c4c_db = $this->load->database('c4cDB', TRUE); // the TRUE paramater tells CI that you'd like to return the database object.
 
 
         $getDWH = $dwh_db->query('select max(client_id) as client_id from tbl_exposures');
@@ -1441,146 +1439,146 @@ class processor extends CI_Model {
         }
     }
 
-    function syncExposuress() {
-        $dwh_db = $this->load->database('syncData', TRUE);
-        $c4c_db = $this->load->database('c4cDB', TRUE); // the TRUE paramater tells CI that you'd like to return the database object.
-//Insert new data
-        $getDWH = $dwh_db->query('select max(client_id) as client_id from tbl_exposures_new ');
-        if ($getDWH->num_rows() > 0) {
-            foreach ($getDWH->result() as $value) {
-                $current_id = $value->client_id;
-                $c4c_db = $this->load->database('c4cDB', TRUE); // the TRUE paramater tells CI that you'd like to return the database object.
+    // function syncExposuress() {
+    //     $dwh_db = $this->load->database('syncData', TRUE);
+    //     //$c4c_db = $this->load->database('c4cDB', TRUE); // the TRUE paramater tells CI that you'd like to return the database object.
+    //     //Insert new data
+    //     $getDWH = $dwh_db->query('select max(client_id) as client_id from tbl_exposures_new ');
+    //     if ($getDWH->num_rows() > 0) {
+    //         foreach ($getDWH->result() as $value) {
+    //             $current_id = $value->client_id;
+    //             //$c4c_db = $this->load->database('c4cDB', TRUE); // the TRUE paramater tells CI that you'd like to return the database object.
 
-                $getnewid = $c4c_db->query("select * from tbl_exposure_report where client_id > '$current_id'");
-                if ($getnewid->num_rows() > 0) {
-                    foreach ($getnewid->result() as $value) {
-                        $id = $value->client_id;
-                        $reg_status = $value->reg_status;
-                        $national_id = $value->national_id;
-                        $first_name = $value->first_name;
-                        $last_name = $value->last_name;
-                        $dob = $value->dob;
-                        $date_registered = $value->date_registered;
-                        $age = $value->age;
-                        $enrollment_date = $value->enrollment_date;
-                        $age_group = $value->age_group;
-                        $gender = $value->gender;
-                        $cadre = $value->cadre;
-                        $mfl_no = $value->mfl_no;
-                        $date_registered = $value->date_registered;
-                        $hepatitsb_status = $value->hepatitsb_status;
-                        $facility = $value->facility;
-                        $sub_county = $value->sub_county;
-                        $county = $value->county;
-                        $facility_level = $value->facility_level;
-                        $receivedsms = $value->receivedsms;
-                        $age_group = $value->age_group;
-                        $sentsms = $value->sentsms;
-                        $mobile_no = $value->mobile_no;
-                        $categ_name = $value->categ_name;
+    //             $getnewid = $c4c_db->query("select * from tbl_exposure_report where client_id > '$current_id'");
+    //             if ($getnewid->num_rows() > 0) {
+    //                 foreach ($getnewid->result() as $value) {
+    //                     $id = $value->client_id;
+    //                     $reg_status = $value->reg_status;
+    //                     $national_id = $value->national_id;
+    //                     $first_name = $value->first_name;
+    //                     $last_name = $value->last_name;
+    //                     $dob = $value->dob;
+    //                     $date_registered = $value->date_registered;
+    //                     $age = $value->age;
+    //                     $enrollment_date = $value->enrollment_date;
+    //                     $age_group = $value->age_group;
+    //                     $gender = $value->gender;
+    //                     $cadre = $value->cadre;
+    //                     $mfl_no = $value->mfl_no;
+    //                     $date_registered = $value->date_registered;
+    //                     $hepatitsb_status = $value->hepatitsb_status;
+    //                     $facility = $value->facility;
+    //                     $sub_county = $value->sub_county;
+    //                     $county = $value->county;
+    //                     $facility_level = $value->facility_level;
+    //                     $receivedsms = $value->receivedsms;
+    //                     $age_group = $value->age_group;
+    //                     $sentsms = $value->sentsms;
+    //                     $mobile_no = $value->mobile_no;
+    //                     $categ_name = $value->categ_name;
 
-//                        echo 'Inserted client ID  ' . $id . '<br>';
+    //     //                        echo 'Inserted client ID  ' . $id . '<br>';
 
-                        $data = array(
-                            'client_id' => $id,
-                            'reg_status' => $reg_status,
-                            'national_id' => $national_id,
-                            'first_name' => $first_name,
-                            'last_name' => $last_name,
-                            'dob' => $dob,
-                            'age' => $age,
-                            'enrollment_date' => $enrollment_date,
-                            'age_group' => $age_group,
-                            'gender' => $gender,
-                            'cadre' => $cadre,
-                            'mfl_no' => $mfl_no,
-                            'date_registered' => $date_registered,
-                            'hepatitsb_status' => $hepatitsb_status,
-                            'facility' => $facility,
-                            'sub_county' => $sub_county,
-                            'county' => $county,
-                            'facility_level' => $facility_level,
-                            'receivedsms' => $receivedsms,
-                            'sentsms' => $sentsms,
-                            'mobile_no' => $mobile_no,
-                            'categ_name' => $categ_name
-                        );
-//                        $dwh_db->where('client_id', $id);
-//                        $dwh_db->update('tbl_smslogs_new', $data);
-                        $dwh_db->insert('tbl_smslogs_new', $data);
-                    }
-                }
-            }
-        }
-//Update existing data
-        $getDWH = $dwh_db->query('select (client_id) as client_id from tbl_exposures ');
-        if ($getDWH->num_rows() > 0) {
-            foreach ($getDWH->result() as $value) {
-                $current_id = $value->client_id;
-                $c4c_db = $this->load->database('c4cDB', TRUE); // the TRUE paramater tells CI that you'd like to return the database object.
+    //                     $data = array(
+    //                         'client_id' => $id,
+    //                         'reg_status' => $reg_status,
+    //                         'national_id' => $national_id,
+    //                         'first_name' => $first_name,
+    //                         'last_name' => $last_name,
+    //                         'dob' => $dob,
+    //                         'age' => $age,
+    //                         'enrollment_date' => $enrollment_date,
+    //                         'age_group' => $age_group,
+    //                         'gender' => $gender,
+    //                         'cadre' => $cadre,
+    //                         'mfl_no' => $mfl_no,
+    //                         'date_registered' => $date_registered,
+    //                         'hepatitsb_status' => $hepatitsb_status,
+    //                         'facility' => $facility,
+    //                         'sub_county' => $sub_county,
+    //                         'county' => $county,
+    //                         'facility_level' => $facility_level,
+    //                         'receivedsms' => $receivedsms,
+    //                         'sentsms' => $sentsms,
+    //                         'mobile_no' => $mobile_no,
+    //                         'categ_name' => $categ_name
+    //                     );
+    //     //                        $dwh_db->where('client_id', $id);
+    //     //                        $dwh_db->update('tbl_smslogs_new', $data);
+    //                             $dwh_db->insert('tbl_smslogs_new', $data);
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     //Update existing data
+    //     $getDWH = $dwh_db->query('select (client_id) as client_id from tbl_exposures ');
+    //     if ($getDWH->num_rows() > 0) {
+    //         foreach ($getDWH->result() as $value) {
+    //             $current_id = $value->client_id;
+    //             //$c4c_db = $this->load->database('c4cDB', TRUE); // the TRUE paramater tells CI that you'd like to return the database object.
 
-                $getnewid = $c4c_db->query("SELECT * FROM tbl_exposure_report WHERE client_id='$current_id' and date_exposed BETWEEN CURDATE() - INTERVAL 1 DAY AND CURDATE()");
-                if ($getnewid->num_rows() > 0) {
-                    foreach ($getnewid->result() as $value) {
-                        $id = $value->client_id;
-                        $reg_status = $value->reg_status;
-                        $national_id = $value->national_id;
-                        $first_name = $value->first_name;
-                        $last_name = $value->last_name;
-                        $dob = $value->dob;
-                        $date_registered = $value->date_registered;
-                        $age = $value->age;
-                        $enrollment_date = $value->enrollment_date;
-                        $age_group = $value->age_group;
-                        $gender = $value->gender;
-                        $cadre = $value->cadre;
-                        $mfl_no = $value->mfl_no;
-                        $date_registered = $value->date_registered;
-                        $hepatitsb_status = $value->hepatitsb_status;
-                        $facility = $value->facility;
-                        $sub_county = $value->sub_county;
-                        $county = $value->county;
-                        $facility_level = $value->facility_level;
-                        $receivedsms = $value->receivedsms;
-                        $age_group = $value->age_group;
-                        $sentsms = $value->sentsms;
-                        $mobile_no = $value->mobile_no;
-                        $categ_name = $value->categ_name;
+    //             $getnewid = $c4c_db->query("SELECT * FROM tbl_exposure_report WHERE client_id='$current_id' and date_exposed BETWEEN CURDATE() - INTERVAL 1 DAY AND CURDATE()");
+    //             if ($getnewid->num_rows() > 0) {
+    //                 foreach ($getnewid->result() as $value) {
+    //                     $id = $value->client_id;
+    //                     $reg_status = $value->reg_status;
+    //                     $national_id = $value->national_id;
+    //                     $first_name = $value->first_name;
+    //                     $last_name = $value->last_name;
+    //                     $dob = $value->dob;
+    //                     $date_registered = $value->date_registered;
+    //                     $age = $value->age;
+    //                     $enrollment_date = $value->enrollment_date;
+    //                     $age_group = $value->age_group;
+    //                     $gender = $value->gender;
+    //                     $cadre = $value->cadre;
+    //                     $mfl_no = $value->mfl_no;
+    //                     $date_registered = $value->date_registered;
+    //                     $hepatitsb_status = $value->hepatitsb_status;
+    //                     $facility = $value->facility;
+    //                     $sub_county = $value->sub_county;
+    //                     $county = $value->county;
+    //                     $facility_level = $value->facility_level;
+    //                     $receivedsms = $value->receivedsms;
+    //                     $age_group = $value->age_group;
+    //                     $sentsms = $value->sentsms;
+    //                     $mobile_no = $value->mobile_no;
+    //                     $categ_name = $value->categ_name;
 
-                        echo 'Todays client ID  ' . $id . '<br>';
+    //                     echo 'Todays client ID  ' . $id . '<br>';
 
-                        $data = array(
-                            'reg_status' => $reg_status,
-                            'national_id' => $national_id,
-                            'first_name' => $first_name,
-                            'last_name' => $last_name,
-                            'dob' => $dob,
-                            'age' => $age,
-                            'enrollment_date' => $enrollment_date,
-                            'age_group' => $age_group,
-                            'gender' => $gender,
-                            'cadre' => $cadre,
-                            'mfl_no' => $mfl_no,
-                            'date_registered' => $date_registered,
-                            'hepatitsb_status' => $hepatitsb_status,
-                            'facility' => $facility,
-                            'sub_county' => $sub_county,
-                            'county' => $county,
-                            'facility_level' => $facility_level,
-                            'receivedsms' => $receivedsms,
-                            'sentsms' => $sentsms,
-                            'mobile_no' => $mobile_no,
-                            'categ_name' => $categ_name
-                        );
+    //                     $data = array(
+    //                         'reg_status' => $reg_status,
+    //                         'national_id' => $national_id,
+    //                         'first_name' => $first_name,
+    //                         'last_name' => $last_name,
+    //                         'dob' => $dob,
+    //                         'age' => $age,
+    //                         'enrollment_date' => $enrollment_date,
+    //                         'age_group' => $age_group,
+    //                         'gender' => $gender,
+    //                         'cadre' => $cadre,
+    //                         'mfl_no' => $mfl_no,
+    //                         'date_registered' => $date_registered,
+    //                         'hepatitsb_status' => $hepatitsb_status,
+    //                         'facility' => $facility,
+    //                         'sub_county' => $sub_county,
+    //                         'county' => $county,
+    //                         'facility_level' => $facility_level,
+    //                         'receivedsms' => $receivedsms,
+    //                         'sentsms' => $sentsms,
+    //                         'mobile_no' => $mobile_no,
+    //                         'categ_name' => $categ_name
+    //                     );
 
-                        $dwh_db->where('client_id', $id);
-                        $dwh_db->update('tbl_smslogs_new', $data);
-                        //$dwh_db->insert('tbl_smslogs_new', $data);
-                    }
-                }
-            }
-        }
-    }
+    //                     $dwh_db->where('client_id', $id);
+    //                     $dwh_db->update('tbl_smslogs_new', $data);
+    //                     //$dwh_db->insert('tbl_smslogs_new', $data);
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 
     function receiver_processor() {
 
