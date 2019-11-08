@@ -1332,17 +1332,20 @@ class processor extends CI_Model {
         $query = "SELECT id,name from tbl_partners";
         return $this->db->query($query)->result_array();
     }
+    
 
     function syncREGandSMS() {
         $dwh_db = $this->load->database('post_C4C', TRUE);
-        $c4c_db = $this->load->database('c4cDB', TRUE); // the TRUE paramater tells CI that you'd like to return the database object.
+        //$c4c_db = $this->load->database('c4cDB', TRUE); // the TRUE paramater tells CI that you'd like to return the database object.
 
         $getDWH = $dwh_db->query('select max(client_id) as client_id from tbl_smslogs');
         foreach ($getDWH->result_array() as $value) {
             $current_id = $value['client_id'];
-//                print_r($current_id); 
+            //                print_r($current_id); 
 
             $getnewid = $this->db->query("select * from tbl_sentandreceivedsms where client_id > '$current_id'");
+            //echo $getnewid . 'New IDs';
+
             foreach ($getnewid->result_array() as $data) {
                 $hcw_id = $data['client_id'];
                 $updated_at = $data['updated_at'];
@@ -1350,8 +1353,8 @@ class processor extends CI_Model {
                 $sentsms = $data['sentsms'];
 
                 if ($updated_at == $addedOn) {
-//                    $leo = date("Y-m-d");
-//                    print_r($leo);
+                    //                    $leo = date("Y-m-d");
+                        //                    print_r($leo);
                     echo 'Inserted client ID =>  ' . $hcw_id . ' Updated At ' . $updated_at . ' Added On ' . $addedOn . ' sent SMS ' . $sentsms . '<br>';
                     $dwh_db->insert('tbl_smslogs', $data);
                 } else {

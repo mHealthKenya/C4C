@@ -86,6 +86,7 @@ class core extends MY_Controller {
         echo $items;
 
     }
+    
 
     function fixsms() {
         $dest = '+254728802160';
@@ -756,6 +757,8 @@ class core extends MY_Controller {
         //        $this->RegApp($data);
         $this->data->RegClnt($RegClient);
     }
+
+    
 
 }
 
