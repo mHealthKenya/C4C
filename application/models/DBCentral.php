@@ -1271,7 +1271,7 @@ INNER JOIN tbl_gender ON tbl_gender.id = tbl_patientdetails.gender_id AND tbl_ma
         // echo json_encode($date_from);
         // exit;
 
-        $query .= " ORDER BY enrollment_date DESC";
+        $query .= "GROUP BY client_id ORDER BY enrollment_date DESC";
         $sql = $this->db->query($query)->result_array();
 
 

@@ -413,26 +413,40 @@ class processor extends CI_Model {
     }
 
     function PostSMS($dest, $msg) {
-        // echo "ndani hapa" .$dest ."<br>".$msg;        
-        //Africa's Talking Library.
-        // require_once '/opt/lampp/htdocs/c4c-dev/application/libraries/AfricasTalkingGateway.php';
-        $this->load->library('AfricasTalkingGateway');
+        $jsonData = array(
+            'from' => '40145',
+            'phone' =>$dest,
+             'message' => $msg
+         );
+    
+         $curl = curl_init();
+    
+         curl_setopt_array($curl, array(
+             CURLOPT_PORT => "5000",
+             CURLOPT_URL => "http://localhost:5000/sender",
+             CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+             CURLOPT_MAXREDIRS => 10,
+             CURLOPT_TIMEOUT => 300,
+             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+             CURLOPT_CUSTOMREQUEST => "POST",
+             CURLOPT_POSTFIELDS => json_encode($jsonData),
+             CURLOPT_HTTPHEADER => array(
+                 "cache-control: no-cache",
+                 "content-type: application/json"
+             ),
+         ));
+         $response = curl_exec($curl);
+         $err = curl_error($curl);
+    
+         curl_close($curl);
+    
+         if ($err) {
+            //  echo "cURL Error #:" . $err;
+         } else {
+         
+         }
 
-
-        //Africa's Talking API key and username.
-        $username = 'mhealthkenya';
-        $apikey = '9318d173cb9841f09c73bdd117b3c7ce3e6d1fd559d3ca5f547ff2608b6f3212';
-
-        //Shortcode.
-        $from = "40145";
-
-        $gateway = new AfricasTalkingGateway($username, $apikey);
-        try {
-            $results = $gateway->sendMessage($dest, $msg, $from);
-            // echo 'Great,SMS sent';
-        } catch (GatewayException $e) {
-            echo "Oops an error encountered while sending: " . $e->getMessage();
-        }
     }
 
     //fetch county,s_county and facilities api to
@@ -442,6 +456,7 @@ class processor extends CI_Model {
     }
 
     function SearchMobile($Mno) {
+       
 
 
         $MobileNo = $Mno['mobile_no'];
@@ -476,6 +491,7 @@ class processor extends CI_Model {
             echo "Invalid Mobile Number";
         }
         //Check Broadcast Rights
+        
         $this->IsFacilityUser($mobile_no);
     }
 
@@ -3556,6 +3572,8 @@ class processor extends CI_Model {
 
 //Check if one has the rights to broadcast sms from mobile app.
     function IsFacilityUser($mno) {
+        
+        
         $query_a = $this->db->query("SELECT user_mobile,user_level from tbl_staffdetails where user_mobile='$mno' ");
 
         if ($query_a->num_rows() > 0) {
@@ -3566,7 +3584,7 @@ class processor extends CI_Model {
             $id2 = '2C+posZ0ovi';
 
             $msg = $id1 . '' . $text . '*' . $en . ' ' . $id2;
-
+        
             $this->PostSMS($mno, $msg);
         } else {
             $item = 'NO';
@@ -3576,8 +3594,9 @@ class processor extends CI_Model {
             $id2 = '2C+posZ0ovi';
 
             $msg = $id1 . '' . $text . '*' . $en . ' ' . $id2;
-
-            $this->PostSMS($mno, $msg);
+         
+           $this->PostSMS($mno, $msg);
+            
         }
 
 //        $complete_registration = 5;
