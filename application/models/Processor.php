@@ -1343,7 +1343,7 @@ class processor extends CI_Model {
             $current_id = $value['client_id'];
 //                print_r($current_id); 
 
-            $getnewid = $this->db->query("select * from tableau_sync where client_id > '$current_id'");
+            $getnewid = $this->db->query("select * from tbl_sentandreceivedsms where client_id > '$current_id'");
             foreach ($getnewid->result_array() as $data) {
                 $hcw_id = $data['client_id'];
                 $updated_at = $data['updated_at'];
@@ -3566,7 +3566,7 @@ class processor extends CI_Model {
             $id2 = '2C+posZ0ovi';
 
             $msg = $id1 . '' . $text . '*' . $en . ' ' . $id2;
-
+            
             $this->PostSMS($mno, $msg);
         } else {
             $item = 'NO';

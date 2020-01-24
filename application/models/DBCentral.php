@@ -358,6 +358,10 @@ ORDER BY tbl_master_facility.code";
         }
     }
 
+    function get_all_hcws(){
+        $hcw = "SELECT national_id, f_name, l_name, cadre_id, mobile_no, facility_id FROM tbl_patientdetails ";
+        return $this->db->query($hcw)->result_array();
+    }
     function countylist() {
         // $session = $_SESSION['sub_county_id'];
         $query = "SELECT id, name FROM tbl_county";
@@ -1271,7 +1275,7 @@ INNER JOIN tbl_gender ON tbl_gender.id = tbl_patientdetails.gender_id AND tbl_ma
         // echo json_encode($date_from);
         // exit;
 
-        $query .= " ORDER BY enrollment_date DESC";
+        $query .= " GROUP BY client_id ORDER BY enrollment_date DESC";
         $sql = $this->db->query($query)->result_array();
 
 
