@@ -104,25 +104,25 @@ class Home extends MY_Controller {
  
         $config['first_link'] = '« First';
         $config['first_tag_open'] = '<li class="prev page">';
-        $config['first_tag_close'] = '</li>';
-        
-        $config['last_link'] = 'Last »';
-        $config['last_tag_open'] = '<li class="next page">';
-        $config['last_tag_close'] = '</li>';
-        
-        $config['next_link'] = 'Next →';
-        $config['next_tag_open'] = '<li class="next page">';
-        $config['next_tag_close'] = '</li>';
-        
-        $config['prev_link'] = '← Previous';
-        $config['prev_tag_open'] = '<li class="prev page">';
-        $config['prev_tag_close'] = '</li>';
-        
-        $config['cur_tag_open'] = '<li class="active"><a href="">';
-        $config['cur_tag_close'] = '</a></li>';
-        
-        $config['num_tag_open'] = '<li class="page">';
-        $config['num_tag_close'] = '</li>';
+  $config['first_tag_close'] = '</li>';
+ 
+  $config['last_link'] = 'Last »';
+  $config['last_tag_open'] = '<li class="next page">';
+  $config['last_tag_close'] = '</li>';
+ 
+  $config['next_link'] = 'Next →';
+  $config['next_tag_open'] = '<li class="next page">';
+  $config['next_tag_close'] = '</li>';
+ 
+  $config['prev_link'] = '← Previous';
+  $config['prev_tag_open'] = '<li class="prev page">';
+  $config['prev_tag_close'] = '</li>';
+ 
+  $config['cur_tag_open'] = '<li class="active"><a href="">';
+  $config['cur_tag_close'] = '</a></li>';
+ 
+  $config['num_tag_open'] = '<li class="page">';
+  $config['num_tag_close'] = '</li>';
 
         $this->pagination->initialize($config);
 
@@ -190,6 +190,10 @@ class Home extends MY_Controller {
 
          $this->load->view('clients_raw', $data, $county);
     }
+
+
+    
+
 
     function sentsms() {
         $data["counties"] = $this->data->getCounty();
@@ -675,19 +679,6 @@ WHERE c.code= '$c'
             echo json_encode($broadcast);
         }
     }
-    function new_broadcast_code() {
-        $cadres = $this->data->getcadre();
-        $counties = $this->data->countylist();
-
-        $hcws = $this->data->get_all_hcws();
-            $data["counties"] = $counties;
-            $data["cadres"] = $cadres;
-            $data["hcws"] = $hcws;
-
-            $this->load->view('new_broadcast_view', $data);       
-
-     
-    }
 
      function create_new_broadcast() {
 
@@ -706,9 +697,7 @@ WHERE c.code= '$c'
         $items = [
             $cdre = $this->input->post()
         ];
-        //dd($items);
-        return $items;
-        exit;
+//        print_r($items);
         //  Scan through outer loop
 
         foreach ($items as $simu) {

@@ -49,7 +49,6 @@ class core extends MY_Controller {
 
 
     function CountySearch() {
-    
         $returned_value = $this->data->SearchCnty();
 
         $items = json_encode(array('result' => $returned_value));
@@ -86,7 +85,6 @@ class core extends MY_Controller {
         echo $items;
 
     }
-    
 
     function fixsms() {
         $dest = '+254728802160';
@@ -757,8 +755,6 @@ class core extends MY_Controller {
         //        $this->RegApp($data);
         $this->data->RegClnt($RegClient);
     }
-
-    
 
 }
 

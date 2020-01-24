@@ -171,7 +171,7 @@
                         url: "<?php echo base_url(); ?>login/check_auth",
                         data: dataString,
                         success: function (data) {
-                            console.log(data);
+                           data = data.trim();
                             if (data == "Login Success") {
                                 swal({
                                     title: "Login Success!",
